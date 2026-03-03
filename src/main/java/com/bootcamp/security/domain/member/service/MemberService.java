@@ -6,6 +6,7 @@ import com.bootcamp.security.domain.member.dto.MemberSummaryResponse;
 import com.bootcamp.security.domain.member.entity.Member;
 import com.bootcamp.security.domain.member.entity.Role;
 import com.bootcamp.security.domain.member.repository.MemberRepository;
+import com.bootcamp.security.global.exception.DuplicateUsernameException;
 import com.bootcamp.security.global.exception.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,9 @@ public class MemberService {
 
     @Transactional
     public void join(MemberCreateRequest request) {
+        if (memberRepository.existsByUsername(request.username())){
+            throw new DuplicateUsernameException("Duplicate Username");
+        }
         Member member = Member.builder()
                 .name(request.name())
                 .username(request.username())

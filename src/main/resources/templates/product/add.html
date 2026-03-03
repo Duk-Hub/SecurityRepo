@@ -31,11 +31,11 @@
 
     <div class="header">
         <h2 class="title">상품 추가</h2>
-        <a class="btn" th:href="@{/product/list}">목록으로</a>
+        <a class="btn" th:href="@{/api/product/list}">목록으로</a>
     </div>
 
     <div class="card">
-        <form th:action="@{/product/add}" th:object="${request}" method="post">
+        <form th:action="@{/api/product/add}" th:object="${request}" method="post">
 
             <div class="field">
                 <label for="name">상품명</label>
@@ -56,7 +56,7 @@
             </div>
 
             <div class="actions">
-                <a class="btn" th:href="@{/product/list}">취소</a>
+                <a class="btn" th:href="@{/api/product/list}">취소</a>
                 <button class="btn btn-primary" type="submit">저장</button>
             </div>
         </form>

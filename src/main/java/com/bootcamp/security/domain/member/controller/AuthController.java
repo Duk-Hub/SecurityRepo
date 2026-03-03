@@ -2,6 +2,7 @@ package com.bootcamp.security.domain.member.controller;
 
 import com.bootcamp.security.domain.member.dto.MemberCreateRequest;
 import com.bootcamp.security.domain.member.service.MemberService;
+import com.bootcamp.security.global.exception.DuplicateUsernameException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,11 +22,16 @@ public class AuthController {
     }
 
     @PostMapping("/auth/signup")
-    public String signup(@Valid MemberCreateRequest request, BindingResult bindingResult) {
+    public String signup(@Valid @ModelAttribute("request") MemberCreateRequest request, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "auth/signup";
         }
-        memberService.join(request);
+        try {
+            memberService.join(request);
+        } catch (DuplicateUsernameException e) {
+            bindingResult.rejectValue("username", "duplicate","이미 사용중인 아이디입니다.");
+            return "auth/signup";
+        }
         return "redirect:/";
     }
 

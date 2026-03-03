@@ -32,7 +32,7 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String addProduct(@Valid ProductCreateRequest request, BindingResult bindingResult) {
+    public String addProduct(@Valid @ModelAttribute("request") ProductCreateRequest request, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "product/add";
         }
