@@ -2,6 +2,7 @@ package com.bootcamp.security.domain.member.controller;
 
 import com.bootcamp.security.domain.member.dto.MemberCreateRequest;
 import com.bootcamp.security.domain.member.service.MemberService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -20,7 +21,7 @@ public class AuthController {
     }
 
     @PostMapping("/auth/signup")
-    public String signup(MemberCreateRequest request, BindingResult bindingResult) {
+    public String signup(@Valid MemberCreateRequest request, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "auth/signup";
         }
