@@ -34,7 +34,9 @@ public class SecurityConfig {
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/api/auth/logout")
-                        .logoutSuccessUrl("/api/auth/login?logout=true"));
+                        .logoutSuccessUrl("/api/auth/login?logout=true"))
+                .exceptionHandling(ex -> ex
+                        .accessDeniedPage("/error/403"));
 
         return http.build();
     }
