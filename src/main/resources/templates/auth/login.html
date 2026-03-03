@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>로그인</title>
+    <style>
+        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 24px; }
+        .container { max-width: 420px; margin: 0 auto; }
+        .card { border: 1px solid #ddd; border-radius: 10px; padding: 18px; }
+        .field { margin: 12px 0; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+        button { width: 100%; padding: 10px; border: 0; border-radius: 8px; cursor: pointer; }
+        .msg { margin: 12px 0; padding: 10px; border-radius: 8px; }
+        .msg-error { background: #ffecec; border: 1px solid #ffb3b3; }
+        .msg-ok { background: #ecfff0; border: 1px solid #b3ffbf; }
+        .link { margin-top: 12px; text-align: center; }
+        .link a { text-decoration: none; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>로그인</h2>
+
+    <div class="card">
+        <div class="msg msg-error" th:if="${param.error}">
+            아이디 또는 비밀번호가 올바르지 않습니다.
+        </div>
+
+        <div class="msg msg-ok" th:if="${param.logout}">
+            로그아웃되었습니다.
+        </div>
+
+        <form th:action="@{/api/auth/login}" method="post">
+            <div class="field">
+                <label for="username">아이디</label>
+                <input id="username" name="username" type="text" autocomplete="username" required />
+            </div>
+
+            <div class="field">
+                <label for="password">비밀번호</label>
+                <input id="password" name="password" type="password" autocomplete="current-password" required />
+            </div>
+
+            <button type="submit">로그인</button>
+        </form>
+
+        <div class="link">
+            <a th:href="@{/api/auth/signup}">회원가입</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

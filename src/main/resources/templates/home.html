@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Home</title>
+    <style>
+        body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 24px; }
+        .container { max-width: 860px; margin: 0 auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 18px; }
+        .title { margin: 0; }
+        .card { border: 1px solid #ddd; border-radius: 12px; padding: 18px; }
+        .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .section-title { margin: 0 0 10px; font-size: 1.05rem; }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 12px 14px; border-radius: 10px; text-decoration: none;
+            border: 1px solid #ccc; background: #fff; color: #111;
+            font-weight: 600;
+        }
+        .btn:hover { background: #f6f6f6; }
+        .btn-primary { border-color: #111; }
+        .btn-danger { border-color: #c40000; color: #c40000; }
+        .btn-danger:hover { background: #ffecec; }
+        .toolbar { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+        .muted { color: #666; font-size: 0.95rem; margin: 6px 0 0; }
+        @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } .header { align-items: flex-start; flex-direction: column; } .toolbar { justify-content: flex-start; } }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="header">
+        <div>
+            <h2 class="title">Home</h2>
+        </div>
+
+        <div class="toolbar">
+            <a class="btn btn-primary" th:href="@{/api/auth/login}" sec:authorize="isAnonymous()">로그인</a>
+            <a class="btn" th:href="@{/api/auth/signup}" sec:authorize="isAnonymous()">회원가입</a>
+
+            <form th:action="@{/api/auth/logout}" method="post" sec:authorize="isAuthenticated()">
+                <button type="submit" class="btn btn-danger">로그아웃</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3 class="section-title">바로가기</h3>
+
+        <div class="grid">
+            <a class="btn" th:href="@{/api/product/list}">상품 목록</a>
+            <a class="btn" th:href="@{/api/product/add}">상품 추가</a>
+
+            <a class="btn" th:href="@{/api/member/list}">회원 목록</a>
+            <a class="btn" th:href="@{/api/member/detail}">회원 상세</a>
+        </div>
+
+        <p class="muted" sec:authorize="isAuthenticated()">
+            현재 로그인: <strong sec:authentication="name"></strong>
+        </p>
+    </div>
+
+</div>
+</body>
+</html>
