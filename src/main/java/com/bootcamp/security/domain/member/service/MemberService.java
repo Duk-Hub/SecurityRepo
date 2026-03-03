@@ -2,6 +2,7 @@ package com.bootcamp.security.domain.member.service;
 
 import com.bootcamp.security.domain.member.dto.MemberCreateRequest;
 import com.bootcamp.security.domain.member.dto.MemberResponse;
+import com.bootcamp.security.domain.member.dto.MemberSummaryResponse;
 import com.bootcamp.security.domain.member.entity.Member;
 import com.bootcamp.security.domain.member.entity.Role;
 import com.bootcamp.security.domain.member.repository.MemberRepository;
@@ -35,26 +36,16 @@ public class MemberService {
         log.info("회원가입 완료 : {}", member.getId());
     }
 
-    @Transactional
-    public void setManager(Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberNotFoundException("Member not found"));
-        member.setManager();
-        log.info("권한 변경 완료: {} {}", member.getId(), member.getRole());
-    }
-
-    @Transactional
-    public void setAdmin(Long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberNotFoundException("Member not found"));
-        member.setAdmin();
-        log.info("권한 변경 완료: {} {}", member.getId(), member.getRole());
-    }
-
-    public List<MemberResponse> findAll(){
+    public List<MemberSummaryResponse> findAll(){
         return memberRepository.findAll()
                 .stream()
-                .map(MemberResponse::from)
+                .map(MemberSummaryResponse::from)
                 .toList();
+    }
+
+    public MemberResponse showDetails(String username) {
+        Member member = memberRepository.findByUsername(username)
+                .orElseThrow(() -> new MemberNotFoundException("Member Not Found"));
+        return MemberResponse.from(member);
     }
 }
