@@ -28,4 +28,9 @@ public class AuthController {
         memberService.join(request);
         return "redirect:/";
     }
+
+    @GetMapping("/auth/login")
+    public String loginForm(){
+        return "auth/login";
+    }
 }

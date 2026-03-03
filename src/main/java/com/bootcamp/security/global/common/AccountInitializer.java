@@ -4,6 +4,7 @@ import com.bootcamp.security.domain.member.entity.Member;
 import com.bootcamp.security.domain.member.entity.Role;
 import com.bootcamp.security.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 /**
  *과제 테스트용 계정
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class AccountInitializer implements CommandLineRunner {
